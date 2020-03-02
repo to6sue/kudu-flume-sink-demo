@@ -1,0 +1,18 @@
+# Table : twitter_bigdata
+CREATE TABLE twitter_bigdata (
+id BIGINT PRIMARY KEY,
+user_id BIGINT,
+name STRING,
+screen_name STRING,
+text STRING,
+created_at STRING,
+created_timestamp TIMESTAMP)
+STORED AS KUDU TBLPROPERTIES ('kudu.master_addresses'='master01:7051,master02:7051,master03:7051', 'kudu.num_tablet_replicas' = '3');
+
+# Table : twitter_bigdata_user
+CREATE TABLE twitter_bigdata_user (
+user_id BIGINT PRIMARY KEY,
+name STRING,
+screen_name STRING,
+created_timestamp TIMESTAMP)
+STORED AS KUDU TBLPROPERTIES ('kudu.master_addresses'='master01:7051,master02:7051,master03:7051', 'kudu.num_tablet_replicas' = '3');
