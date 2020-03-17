@@ -215,7 +215,7 @@ public class JsonKuduOperationsProducer2 implements KuduOperationsProducer {
                 //json.put("md5", DigestUtils.md5Hex(raw));
             }
             if (addTimeStamp) {
-                json.put("created_timestamp", currentUnixTimeMicros());
+                //json.put("created_timestamp", currentUnixTimeMicros());
             }
             Schema schema = table.getSchema();
             if (!json.isEmpty()) {
