@@ -1,0 +1,30 @@
+agent.sources = r1
+agent.channels = c1
+agent.sinks = k1
+
+# Describe/configure the source
+
+agent.sources.r1.type = org.apache.flume.source.kafka.KafkaSource
+agent.sources.r1.batchSize = 300
+agent.sources.r1.batchDurationMillis = 100
+agent.sources.r1.kafka.bootstrap.servers = localhost:9092
+agent.sources.r1.kafka.topics = mask-store
+agent.sources.r1.kafka.consumer.group.id = flume-consumer
+
+# Describe the sink
+agent.sinks.k1.type = logger
+
+# Use a channel which buffers events in memory
+agent.channels.c1.type = memory
+agent.channels.c1.capacity = 1000
+agent.channels.c1.transactionCapacity =300
+
+# Bind the source and sink to the channel
+agent.sources.r1.channels = c1
+agent.sinks.k1.channel = c1
+
+agent.sinks.k1.type = org.apache.kudu.flume.sink.KuduSink
+agent.sinks.k1.producer =  com.example.kudu.flume.sink.JsonKuduOperationsProducer2
+agent.sinks.k1.masterAddresses = master01:7051,master02:7051,master03:7051,master04:7051,master05:7051
+agent.sinks.k1.tableName = impala::default.mask_store_history
+agent.sinks.k1.batchSize = 100
